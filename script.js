@@ -23,7 +23,7 @@ document.getElementById('video2Input').addEventListener('change', function () {
 });
 
 function exportHTML() {
-  fetch('plec_template.html')
+fetch('plec_template.txt')
     .then(response => response.text())
     .then(template => {
       const finalHtml = template
