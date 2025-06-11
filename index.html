@@ -1,18 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Base64 Inject Tool</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Base64 Video Export Tool</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin: 20px 0 8px;
+      color: #444;
+    }
+    input[type="file"] {
+      padding: 10px;
+      border: 2px dashed #ccc;
+      border-radius: 6px;
+      width: 100%;
+      background-color: #fafafa;
+      cursor: pointer;
+      transition: border 0.3s ease;
+    }
+    input[type="file"]:hover {
+      border-color: #007bff;
+    }
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #007bff, #0062cc);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(to right, #0056b3, #004199);
+      transform: scale(1.01);
+    }
+    .footer-note {
+      margin-top: 25px;
+      font-size: 13px;
+      text-align: center;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
-  <h1>Base64 Video Export Tool</h1>
   <div class="container">
-    <label>Video 1</label>
+    <h1>🎬 Base64 Video Export Tool</h1>
+
+    <label for="video1Input">Upload Video 1 (.mp4)</label>
     <input type="file" id="video1Input" accept="video/mp4">
-    <label>Video 2</label>
+
+    <label for="video2Input">Upload Video 2 (.mp4)</label>
     <input type="file" id="video2Input" accept="video/mp4">
-    <button onclick="exportHTML()">Export HTML</button>
+
+    <button onclick="exportHTML()">⬇️ Export HTML</button>
+
+    <div class="footer-note">
+      This tool encodes your videos to Base64 and injects them into an HTML file.
+    </div>
   </div>
 
   <script src="script.js"></script>
