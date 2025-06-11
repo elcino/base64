@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    overflow: hidden;
+}
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+#clickArea {
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    width: 10%;
+    height: 10%;
+    z-index: 9999;
+    background: transparent;
+    background: rgba(0, 255, 0, 0.5);
+}
+
+</style>
+<script>
+let isSecondVideo = false;
+let hasSecondVideoPlayed = false;
+
+// 🔁 İlk video (loop)
+const video1Base64 = "%%VIDEO1%%";
+const video2Base64 = "%%VIDEO2%%";
+
+window.onload = function () {
+    const video = document.getElementById("mainVideo");
+
+    // Başlangıçta ilk videoyu ayarla
+    video.src = "data:video/mp4;base64," + video1Base64;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.autoplay = true;
+    video.load();
+    video.play();
+
+    const clickArea = document.getElementById("clickArea");
+    clickArea.addEventListener("click", handleClick);
+    clickArea.addEventListener("touchstart", handleClick);
+
+     // swipe algılayıcılar sadece ilk video için
+    video.addEventListener("touchstart", function (e) {
+        if (isSecondVideo) return;
+        const touch = e.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+    });
+
+    video.addEventListener("touchend", function (e) {
+        if (isSecondVideo) return;
+        const touch = e.changedTouches[0];
+        const dx = touch.clientX - touchStartX;
+        const dy = touch.clientY - touchStartY;
+
+        // Yatay swipe mesafesi ve yönü
+        const swipeThreshold = 50; // en az 50px kayma
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > swipeThreshold) {
+            handleSwipe(); // ← geçişi yap
+        }
+    });
+};
+
+function handleClick(event) {
+    event.preventDefault();
+    const video = document.getElementById("mainVideo");
+
+    if (!isSecondVideo) {
+        isSecondVideo = true;
+        video.loop = false;
+        video.muted = false;
+        video.src = "data:video/mp4;base64," + video2Base64;
+        video.load();
+        video.play();
+
+        video.addEventListener("ended", function () {
+            hasSecondVideoPlayed = true;
+            document.body.addEventListener("click", handleFinalClick);
+            document.body.addEventListener("touchstart", handleFinalClick);
+        }, { once: true });
+
+    } else if (hasSecondVideoPlayed) {
+        mraid.open('');
+    }
+}
+function handleFinalClick(e) {
+    e.preventDefault();
+    mraid.open('');
+}
+
+function handleSwipe() {
+    const video = document.getElementById("mainVideo");
+    isSecondVideo = true;
+    video.loop = false;
+    video.muted = false;
+    video.src = "data:video/mp4;base64," + video2Base64;
+    video.load();
+    video.play();
+
+    video.addEventListener("ended", function () {
+        hasSecondVideoPlayed = true;
+
+        // İkinci videodan sonra tüm ekrana tıklama
+        document.body.addEventListener("click", handleFinalClick);
+        document.body.addEventListener("touchstart", handleFinalClick);
+    }, { once: true });
+}
+
+
+</script>
+</head>
+<body>
+<div id="clickArea"></div>  
+<video id="mainVideo"></video>
+</body>
+</html>
